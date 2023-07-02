@@ -1,24 +1,14 @@
-# Copyright (c) FIRST and other WPILib contributors.
-# Open Source Software; you can modify and/or share it under the terms of
-# the WPILib BSD license file in the root directory of this project.
-
-"""
-A place for the constant values in the code that may be used in more than one place. 
-This offers a convenient resources to teams who need to make both quick and universal
-changes.
-"""
 
 import math
 
-
 class DriveConstants:
-    kLeftMotor1Port = 0
-    kLeftMotor2Port = 1
-    kRightMotor1Port = 2
-    kRightMotor2Port = 3
+    kLeftMotor1Port = 2
+    kLeftMotor2Port = 3
+    kRightMotor1Port = 0
+    kRightMotor2Port = 1
 
-    kLeftEncoderPorts = (0, 1)
-    kRightEncoderPorts = (2, 3)
+    kLeftEncoderPorts = (2, 3)
+    kRightEncoderPorts = (0, 1)
     kLeftEncoderReversed = False
     kRightEncoderReversed = True
 
@@ -43,7 +33,6 @@ class DriveConstants:
 
     kTurnToleranceDeg = 5
     kTurnRateToleranceDegPerS = 10  # degrees per second
-
 
 class OIConstants:
     kDriverControllerPort = 0
