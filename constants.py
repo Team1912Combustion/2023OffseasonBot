@@ -36,7 +36,7 @@ class DriveConstants:
 
 class OIConstants:
     kDriverControllerPort = 0
-    kDriverRightBumper = 7
-    kDriverLeftBumper = 6
-    kDriverXbutton = 0
-    kDriverYbutton =  3
+    kDriverRightBumper = 6
+    kDriverLeftBumper = 5
+    kDriverXbutton = 3
+    kDriverYbutton =  4

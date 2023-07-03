@@ -41,8 +41,7 @@ class RobotContainer:
             commands2.RunCommand(
                 lambda: self.robotDrive.arcadeDrive(
                     -self.driverController.getRawAxis(1),
-                    -self.driverController.getRawAxis(4),
-                    True
+                    -self.driverController.getRawAxis(4)
                 ),
                 [self.robotDrive],
             )
