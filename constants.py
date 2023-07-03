@@ -2,10 +2,8 @@
 import math
 
 class DriveConstants:
-    kLeftMotor1Port = 2
-    kLeftMotor2Port = 3
-    kRightMotor1Port = 0
-    kRightMotor2Port = 1
+    kLeftMotorPort = 1
+    kRightMotorPort = 0
 
     kLeftEncoderPorts = (2, 3)
     kRightEncoderPorts = (0, 1)

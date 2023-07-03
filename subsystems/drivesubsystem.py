@@ -13,19 +13,11 @@ class DriveSubsystem(commands2.SubsystemBase):
         super().__init__()
 
         # The motors on the left side of the drive.
-        self.leftMotors = wpilib.MotorControllerGroup(
-            wpilib.Spark(constants.DriveConstants.kLeftMotor1Port),
-            wpilib.Spark(constants.DriveConstants.kLeftMotor2Port),
-        )
-
-        # The motors on the right side of the drive.
-        self.rightMotors = wpilib.MotorControllerGroup(
-            wpilib.Spark(constants.DriveConstants.kRightMotor1Port),
-            wpilib.Spark(constants.DriveConstants.kRightMotor2Port),
-        )
+        self.left = wpilib.Spark(constants.DriveConstants.kLeftMotorPort)
+        self.right = wpilib.Spark(constants.DriveConstants.kRightMotorPort)
 
         # The robot's drive
-        self.drive = wpilib.drive.DifferentialDrive(self.leftMotors, self.rightMotors)
+        self.drive = wpilib.drive.DifferentialDrive(self.left, self.right)
 
         # The left-side drive encoder
         self.leftEncoder = wpilib.Encoder(
@@ -44,7 +36,7 @@ class DriveSubsystem(commands2.SubsystemBase):
         # We need to invert one side of the drivetrain so that positive voltages
         # result in both sides moving forward. Depending on how your robot's
         # gearbox is constructed, you might have to invert the left side instead.
-        self.rightMotors.setInverted(True)
+        self.right.setInverted(True)
 
         # Sets the distance per pulse for the encoders
         self.leftEncoder.setDistancePerPulse(
