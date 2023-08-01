@@ -82,7 +82,7 @@ class RobotContainer:
                 0,
                 # Pipe the output to the turning controls
                 lambda output: self.robotDrive.arcadeDrive(
-                    -self.driverController.getLeftY(), output
+                    -self.driverController.getRawAxis(1), output
                 ),
                 # Require the robot drive
                 [self.robotDrive],
