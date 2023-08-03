@@ -10,7 +10,7 @@ import constants
 import subsystems.drivesubsystem
 import commands.turntoangle
 import commands.turntoangleprofiled
-
+import commands.runautopath
 
 class RobotContainer:
     """
@@ -104,9 +104,4 @@ class RobotContainer:
         )
 
     def getAutonomousCommand(self) -> commands2.Command:
-        """
-        Use this to pass the autonomous command to the main :class:`.Robot` class.
-
-        :returns: the command to run in autonomous
-        """
-        return commands2.InstantCommand()
+        return commands.runautopath.RunAutoPath(self.robotDrive)

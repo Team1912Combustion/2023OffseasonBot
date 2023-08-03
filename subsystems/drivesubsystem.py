@@ -4,6 +4,7 @@ import wpilib.drive
 import commands2
 import math
 import navx
+from wpimath.kinematics import DifferentialDriveOdometry, DifferentialDriveWheelSpeeds
 
 import constants
 
@@ -48,74 +49,79 @@ class DriveSubsystem(commands2.SubsystemBase):
 
         self.navx = navx.AHRS.create_spi()
 
-    def arcadeDrive(self, fwd: float, rot: float):
-        """
-        Drives the robot using arcade controls.
+        # Create an object for our odometry, which will utilize sensor data to
+        # keep a record of our position on the field.
+        self.odometry = DifferentialDriveOdometry(
+            self.navx.getRotation2d(),
+            self.leftEncoder.getDistance(),
+            self.rightEncoder.getDistance(),
+        )
 
-        :param fwd: the commanded forward movement
-        :param rot: the commanded rotation
-        """
+    def periodic(self):
+        self.odometry.update(
+            self.navx.getRotation2d(),
+            self.leftEncoder.getDistance(),
+            self.rightEncoder.getDistance(),
+        )
+
+    def getPose(self):
+        return self.odometry.getPose()
+
+    def getWheelSpeeds(self):
+        speeds = DifferentialDriveWheelSpeeds(
+            self.leftEncoder.getRate(), self.rightEncoder.getRate()
+        )
+        return speeds
+
+    def resetOdometry(self, pose):
+        self.resetEncoders()
+        self.odometry.resetPosition(
+            self.navx.getRotation2d(),
+            self.leftEncoder.getDistance(),
+            self.rightEncoder.getDistance(),
+            pose,
+        )
+
+    def arcadeDrive(self, fwd: float, rot: float):
         self.drive.arcadeDrive(fwd, rot)
 
     def resetEncoders(self):
-        """Resets the drive encoders to currently read a position of 0."""
         self.leftEncoder.reset()
         self.rightEncoder.reset()
 
     def getAverageEncoderDistance(self):
-        """
-        Gets the average distance of the two encoders.
-
-        :returns: the average of the two encoder readings
-        """
         return (self.leftEncoder.getDistance() + self.rightEncoder.getDistance()) / 2.0
 
     def getLeftEncoder(self) -> wpilib.Encoder:
-        """
-        Gets the left drive encoder.
-
-        :returns: the left drive encoder
-        """
         return self.leftEncoder
 
     def getRightEncoder(self) -> wpilib.Encoder:
-        """
-        Gets the right drive encoder.
-
-        :returns: the right drive encoder
-        """
         return self.rightEncoder
 
     def setMaxOutput(self, maxOutput: float):
-        """
-        Sets the max output of the drive. Useful for scaling the drive to drive more slowly.
-
-        :param maxOutput: the maximum output to which the drive will be constrained
-        """
         self.drive.setMaxOutput(maxOutput)
 
     def zeroHeading(self):
-        """
-        Zeroes the heading of the robot.
-        """
         self.navx.reset()
 
     def getHeading(self):
-        """
-        Returns the heading of the robot.
-
-        :returns: the robot's heading in degrees, from -180 to 180
-        """
         return self.navx.getYaw() * (
             -1 if constants.DriveConstants.kGyroReversed else 1
         )
 
     def getTurnRate(self):
-        """
-        Returns the turn rate of the robot.
-
-        :returns: The turn rate of the robot, in degrees per second
-        """
         return self.navx.getRate() * (
             -1 if constants.DriveConstants.kGyroReversed else 1
         )
+
+    def tankDriveVolts(self, leftVolts, rightVolts):
+        # Set the voltage of the left side.
+        self.leftMotor.setVoltage(leftVolts)
+
+        # Set the voltage of the right side. It's
+        # inverted with a negative sign because it's motors need to spin in the negative direction
+        # to move forward.
+        self.rightMotor.setVoltage(-rightVolts)
+
+        # Resets the timer for this motor's MotorSafety
+        self.drive.feed()
