@@ -116,12 +116,12 @@ class DriveSubsystem(commands2.SubsystemBase):
 
     def tankDriveVolts(self, leftVolts, rightVolts):
         # Set the voltage of the left side.
-        self.leftMotor.setVoltage(leftVolts)
+        self.left.setVoltage(leftVolts)
 
         # Set the voltage of the right side. It's
         # inverted with a negative sign because it's motors need to spin in the negative direction
         # to move forward.
-        self.rightMotor.setVoltage(-rightVolts)
+        self.right.setVoltage(-rightVolts)
 
         # Resets the timer for this motor's MotorSafety
         self.drive.feed()

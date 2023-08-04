@@ -1,5 +1,5 @@
 
-from commands2 import CommandBase, RamseteCommand, RunCommand
+from commands2 import RamseteCommand, RunCommand, SequentialCommandGroup
 from wpimath.controller import (
     RamseteController,
     PIDController,
@@ -13,20 +13,11 @@ from wpimath.geometry import Pose2d, Rotation2d, Translation2d
 from subsystems.drivesubsystem import DriveSubsystem
 import constants
 
-class RunAutoPath(CommandBase):
+class RunAutoPath(SequentialCommandGroup):
 
     def __init__(self, drive: DriveSubsystem) -> None:
         super().__init__()
-        self.drive = drive
-        self.addRequirements(drive)
 
-    def end(self) -> None:
-        self.drive.tankDriveVolts(0, 0)
-
-    def isFinished(self) -> bool:
-        return True
-
-    def initialize(self) -> None:
         # Create a voltage constraint to ensure we don't accelerate too fast.
         autoVoltageConstraint = DifferentialDriveVoltageConstraint(
             SimpleMotorFeedforwardMeters(
@@ -70,11 +61,11 @@ class RunAutoPath(CommandBase):
         )
 
         # create the RAMSETE command
-        self.ramseteCommand = RamseteCommand(
+        ramseteCommand = RamseteCommand(
             # The trajectory to follow.
             self.exampleTrajectory,
             # A reference to a method that will return our position.
-            self.drive.getPose,
+            drive.getPose,
             # Our RAMSETE controller.
             RamseteController(constants.AutoConstants.kRamseteB, constants.AutoConstants.kRamseteZeta),
             # A feedforward object for the robot.
@@ -86,20 +77,20 @@ class RunAutoPath(CommandBase):
             # Our drive kinematics.
             constants.AutoConstants.kDriveKinematics,
             # A reference to a method which will return a DifferentialDriveWheelSpeeds object.
-            self.drive.getWheelSpeeds,
+            drive.getWheelSpeeds,
             # The turn controller for the left side of the drivetrain.
             PIDController(constants.AutoConstants.kPDriveVel, 0, 0),
             # The turn controller for the right side of the drivetrain.
             PIDController(constants.AutoConstants.kPDriveVel, 0, 0),
             # A reference to a method which will set a specified
             # voltage to each motor. The command will pass the two parameters.
-            self.drive.tankDriveVolts,
+            drive.tankDriveVolts,
             # The subsystems the command should require.
-            [self.drive],
+            [drive],
         )
 
-    def execute(self) -> None:
-        # Reset the robot's position to the starting position of the trajectory.
-        self.drive.resetOdometry(self.exampleTrajectory.initialPose())
-        # Run the RAMSETE
-        self.ramseteCommand.andThen(lambda: self.drive.tankDriveVolts(0, 0))
+        self.addCommands(
+            drive.resetOdometry(self.exampleTrajectory.initialPose()),
+            ramseteCommand,
+            drive.tankDriveVolts(0, 0)
+        )

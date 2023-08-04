@@ -11,6 +11,7 @@ import subsystems.drivesubsystem
 import commands.turntoangle
 import commands.turntoangleprofiled
 import commands.runautopath
+import commands.runtest
 
 class RobotContainer:
     """
@@ -104,4 +105,4 @@ class RobotContainer:
         )
 
     def getAutonomousCommand(self) -> commands2.Command:
-        return commands.runautopath.RunAutoPath(self.robotDrive)
+        return commands.runtest.RunTest(self.robotDrive)
