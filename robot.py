@@ -38,6 +38,10 @@ class MyRobot(commands2.TimedCommandRobot):
         # Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         # autonomous chooser on the dashboard.
         self.container = robotcontainer.RobotContainer()
+        m_field = wpilib.Field2d()
+        wpilib.SmartDashboard.putData(m_field)
+       # m_field.getObject("traj").setTrajectory(m_trajectory);
+
 
     def disabledInit(self) -> None:
         """This function is called once each time the robot enters Disabled mode."""
@@ -57,6 +61,9 @@ class MyRobot(commands2.TimedCommandRobot):
 
     def autonomousPeriodic(self) -> None:
         """This function is called periodically during autonomous"""
+        self.container.m_field.setRobotPose(self.container.robotDrive.getPose())
+        #wpilib.SmartDashboard.putData("Angle",self.container.robotDrive.GetHeading())
+
 
     def teleopInit(self) -> None:
         # This makes sure that the autonomous stops running when
@@ -68,6 +75,7 @@ class MyRobot(commands2.TimedCommandRobot):
 
     def teleopPeriodic(self) -> None:
         """This function is called periodically during operator control"""
+        self.container.m_field.setRobotPose(self.container.robotDrive.getPose())
 
     def testInit(self) -> None:
         # Cancels all running commands at the start of test mode

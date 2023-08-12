@@ -21,14 +21,15 @@ class RobotContainer:
     subsystems, commands, and button mappings) should be declared here.
 
     """
-
+    m_field = None
+    
     def __init__(self):
         """The container for the robot. Contains subsystems, OI devices, and commands."""
         # The robot's subsystems
         self.robotDrive = subsystems.drivesubsystem.DriveSubsystem()
-
+        self.m_field = wpilib.Field2d()
         # The driver's controller
-        self.driverController = commands2.button.CommandJoystick(
+        self.driverController = commands2.button.CommandXboxController(
             constants.OIConstants.kDriverControllerPort)
 
         # Configure the button bindings
@@ -105,4 +106,5 @@ class RobotContainer:
         )
 
     def getAutonomousCommand(self) -> commands2.Command:
-        return commands.runtest.RunTest(self.robotDrive)
+        return commands.turntoangle.TurnToAngle(90., self.robotDrive)
+#        return commands.runtest.RunTest(self.robotDrive)
