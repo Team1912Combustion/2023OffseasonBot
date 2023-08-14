@@ -92,6 +92,11 @@ class RobotContainer:
 
         # Turn to 90 degrees when the 'X' button is pressed, with a 5 second timeout
         commands2.button.JoystickButton(
+            self.driverController, constants.OIConstants.kDriverAbutton
+        ).onTrue(commands.runtest.RunTest(self.robotDrive).withTimeout(10))
+
+        # Turn to 90 degrees when the 'X' button is pressed, with a 5 second timeout
+        commands2.button.JoystickButton(
             self.driverController, constants.OIConstants.kDriverXbutton
         ).onTrue(commands.turntoangle.TurnToAngle(90, self.robotDrive).withTimeout(5))
 

@@ -71,4 +71,5 @@ class OIConstants:
     kDriverRightBumper = 6
     kDriverLeftBumper = 5
     kDriverXbutton = 3
+    kDriverAbutton = 2
     kDriverYbutton =  4

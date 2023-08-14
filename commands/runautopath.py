@@ -61,7 +61,7 @@ class RunAutoPath(SequentialCommandGroup):
         )
 
         # create the RAMSETE command
-        ramseteCommand = RamseteCommand(
+        self.ramseteCommand = RamseteCommand(
             # The trajectory to follow.
             self.exampleTrajectory,
             # A reference to a method that will return our position.
@@ -91,6 +91,6 @@ class RunAutoPath(SequentialCommandGroup):
 
         self.addCommands(
             drive.resetOdometry(self.exampleTrajectory.initialPose()),
-            ramseteCommand,
+            self.ramseteCommand,
             drive.tankDriveVolts(0, 0)
         )
