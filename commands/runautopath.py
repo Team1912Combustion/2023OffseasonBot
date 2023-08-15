@@ -18,6 +18,8 @@ class RunAutoPath(SequentialCommandGroup):
     def __init__(self, drive: DriveSubsystem) -> None:
         super().__init__()
 
+        self.drive = drive
+
         # Create a voltage constraint to ensure we don't accelerate too fast.
         autoVoltageConstraint = DifferentialDriveVoltageConstraint(
             SimpleMotorFeedforwardMeters(
@@ -90,7 +92,7 @@ class RunAutoPath(SequentialCommandGroup):
         )
 
         self.addCommands(
-            drive.resetOdometry(self.exampleTrajectory.initialPose()),
-            self.ramseteCommand,
-            drive.tankDriveVolts(0, 0)
+           RunCommand(lambda: self.drive.resetOdometry(self.exampleTrajectory.initialPose()), self.drive),
+           self.ramseteCommand,
+           RunCommand(lambda: self.drive.tankDriveVolts(0, 0), self.drive),
         )

@@ -110,4 +110,4 @@ class RobotContainer:
         )
 
     def getAutonomousCommand(self) -> commands2.Command:
-        return commands.runtest.RunTest(self.robotDrive)
+        return commands.runautopath.RunAutoPath(self.robotDrive)
