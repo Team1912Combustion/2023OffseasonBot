@@ -7,11 +7,13 @@ import commands2.cmd
 import commands2.button
 
 import constants
+
 import subsystems.drivesubsystem
-import commands.turntoangle
+import subsystems.armsubsystem
+import subsystems.intakesubsystem
+
 import commands.turntoangleprofiled
 import commands.runautopath
-import commands.runtest
 
 class RobotContainer:
     """
@@ -26,10 +28,16 @@ class RobotContainer:
         """The container for the robot. Contains subsystems, OI devices, and commands."""
         # The robot's subsystems
         self.robotDrive = subsystems.drivesubsystem.DriveSubsystem()
+        self.arm = subsystems.armsubsystem.ArmSubsystem()
+        self.intake = subsystems.intakesubsystem.IntakeSubsystem()
 
-        # The driver's controller
+        # The driver controller
         self.driverController = commands2.button.CommandJoystick(
             constants.OIConstants.kDriverControllerPort)
+
+        # The operator controller
+        self.opsController = commands2.button.CommandJoystick(
+            constants.OIConstants.kOpsControllerPort)
 
         # Configure the button bindings
         self.configureButtonBindings()
@@ -49,11 +57,7 @@ class RobotContainer:
         )
 
     def configureButtonBindings(self):
-        """
-        Use this method to define your button->command mappings. Buttons can be created via the button
-        factories on commands2.button.CommandGenericHID or one of its
-        subclasses (commands2.button.CommandJoystick or command2.button.CommandXboxController).
-        """
+
         # Drive at half speed when the right bumper is held
         commands2.button.JoystickButton(
             self.driverController, constants.OIConstants.kDriverRightBumper
@@ -90,23 +94,65 @@ class RobotContainer:
             )
         )
 
-        # Turn to 90 degrees when the 'X' button is pressed, with a 5 second timeout
-        commands2.button.JoystickButton(
-            self.driverController, constants.OIConstants.kDriverAbutton
-        ).onTrue(commands.runtest.RunTest(self.robotDrive).withTimeout(10))
+      # # Turn to 90 degrees when the 'X' button is pressed, with a 5 second timeout
+      # commands2.button.JoystickButton(
+      #     self.driverController, constants.OIConstants.kDriverXbutton
+      # ).onTrue(commands.turntoangle.TurnToAngle(90, self.robotDrive).withTimeout(5))
 
-        # Turn to 90 degrees when the 'X' button is pressed, with a 5 second timeout
+        # Turn to +90 degrees with a profile when the X button is pressed, with a 5 second timeout
         commands2.button.JoystickButton(
             self.driverController, constants.OIConstants.kDriverXbutton
-        ).onTrue(commands.turntoangle.TurnToAngle(90, self.robotDrive).withTimeout(5))
+        ).onTrue(
+            commands.turntoangleprofiled.TurnToAngleProfiled(
+                90, self.robotDrive
+            ).withTimeout(5)
+        )
 
-        # Turn to -90 degrees with a profile when the Y button is pressed, with a 5 second timeout
+        # Turn to -90 degrees with a profile when the B button is pressed, with a 5 second timeout
         commands2.button.JoystickButton(
-            self.driverController, constants.OIConstants.kDriverYbutton
+            self.driverController, constants.OIConstants.kDriverBbutton
         ).onTrue(
             commands.turntoangleprofiled.TurnToAngleProfiled(
                 -90, self.robotDrive
             ).withTimeout(5)
+        )
+
+        # move the arm to the initial position
+        commands2.button.JoystickButton(self.opsController, constants.OIConstants.kOpsAbutton).onTrue(
+            commands2.RunCommand(
+                lambda: self.arm.setTarget(constants.ArmConstants.kPositionInit),
+                [self.arm],
+            )
+        )
+
+        # move the arm to the intake position
+        commands2.button.JoystickButton(self.opsController, constants.OIConstants.kOpsYbutton).onTrue(
+            commands2.RunCommand(
+                lambda: self.arm.setTarget(constants.ArmConstants.kPositionIntake),
+                [self.arm],
+            )
+        )
+
+        # move the arm to the yeet position
+        commands2.button.JoystickButton(self.opsController, constants.OIConstants.kOpsXbutton).onTrue(
+            commands2.RunCommand(
+                lambda: self.arm.setTarget(constants.ArmConstants.kPositionYeet),
+                [self.arm],
+            )
+        )
+
+        # run intake in
+        commands2.button.JoystickButton(
+            self.opsController, constants.OIConstants.kOpsLeftBumper
+        ).whileTrue(
+            commands2.RunCommand(lambda: self.intake.intakeIn(),[self.intake],)
+        )
+
+        # run intake out
+        commands2.button.JoystickButton(
+            self.opsController, constants.OIConstants.kOpsRightBumper
+        ).whileTrue(
+            commands2.RunCommand(lambda: self.intake.intakeOut(),[self.intake],)
         )
 
     def getAutonomousCommand(self) -> commands2.Command:
