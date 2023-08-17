@@ -3,8 +3,8 @@ import math
 from wpimath.kinematics import DifferentialDriveKinematics
 
 class ArmConstants:
-    kLeftMotorPort = 1
-    kRightMotorPort = 0
+    kLeftMotorPort = 3
+    kRightMotorPort = 13
 
     kLeftMotorReversed = False
     kRightMotorReversed = True
@@ -23,8 +23,7 @@ class ArmConstants:
     kMaxMoveRateRevPerS = 1.
     kMaxMoveAccelerationRevPerSSquared = 2.
 
-
-    kIntakeMotorPort = 2
+    kIntakeMotorPort = 4
     kIntakePowerIn = 0.1
     kIntakePowerOut = 0.1
 
