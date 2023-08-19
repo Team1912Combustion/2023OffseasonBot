@@ -26,10 +26,27 @@ class IntakeSubsystem(commands2.SubsystemBase):
             commands2.RunCommand(lambda: self.stop(),self,)
         )
 
-    def intakeIn(self) -> commands2.CommandBase:
+    def intakeIn(self) -> None:
+        self.intake.set(self.powerIn)
+
+    def intakeOut(self) -> None:
+        self.intake.set(self.powerOut)
+
+    def cmdIntakeIn(self) -> commands2.CommandBase:
         return commands2.RunCommand(lambda: self.intake.set(self.powerIn))
 
-    def intakeOut(self) -> commands2.CommandBase:
+    def cmdIntakeOut(self) -> commands2.CommandBase:
+        return commands2.RunCommand(lambda: self.intake.set(self.powerOut))
+
+    def stop(self):
+        self.intake.set(0.)
+
+
+
+    def cmdIntakeIn(self) -> commands2.CommandBase:
+        return commands2.RunCommand(lambda: self.intake.set(self.powerIn))
+
+    def cmdIntakeOut(self) -> commands2.CommandBase:
         return commands2.RunCommand(lambda: self.intake.set(self.powerOut))
 
     def stop(self):

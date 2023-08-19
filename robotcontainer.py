@@ -14,6 +14,8 @@ import subsystems.intakesubsystem
 
 import commands.turntoangleprofiled
 import commands.runautopath
+import commands.intakeIn
+import commands.intakeOut
 
 class RobotContainer:
     """
@@ -30,6 +32,10 @@ class RobotContainer:
         self.robotDrive = subsystems.drivesubsystem.DriveSubsystem()
         self.arm = subsystems.armsubsystem.ArmSubsystem()
         self.intake = subsystems.intakesubsystem.IntakeSubsystem()
+
+        # commands
+        self.IntakeIn = commands.intakeIn.IntakeIn
+        self.IntakeOut = commands.intakeOut.IntakeOut
 
         # The driver controller
         self.driverController = commands2.button.CommandJoystick(
@@ -141,18 +147,32 @@ class RobotContainer:
             )
         )
 
+    #   # run intake in
+    #   commands2.button.JoystickButton(
+    #       self.opsController, constants.OIConstants.kOpsLeftBumper
+    #   ).whileTrue(
+    #       commands2.RunCommand(lambda: self.intake.cmdIntakeIn(),[self.intake],)
+    #   )
+
+    #   # run intake out
+    #   commands2.button.JoystickButton(
+    #       self.opsController, constants.OIConstants.kOpsRightBumper
+    #   ).whileTrue(
+    #       commands2.RunCommand(lambda: self.intake.cmdIntakeOut(),[self.intake],)
+    #   )
+
         # run intake in
         commands2.button.JoystickButton(
             self.opsController, constants.OIConstants.kOpsLeftBumper
         ).whileTrue(
-            commands2.RunCommand(lambda: self.intake.intakeIn(),[self.intake],)
+            self.IntakeIn(self.intake)
         )
 
         # run intake out
         commands2.button.JoystickButton(
             self.opsController, constants.OIConstants.kOpsRightBumper
         ).whileTrue(
-            commands2.RunCommand(lambda: self.intake.intakeOut(),[self.intake],)
+            self.IntakeOut(self.intake)
         )
 
     def getAutonomousCommand(self) -> commands2.Command:
