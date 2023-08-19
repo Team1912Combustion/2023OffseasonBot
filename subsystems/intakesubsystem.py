@@ -21,34 +21,18 @@ class IntakeSubsystem(commands2.SubsystemBase):
         self.powerIn = constants.ArmConstants.kIntakePowerIn
         self.powerOut = constants.ArmConstants.kIntakePowerOut
 
-    def initDefaultCommand(self):
-        self.setDefaultCommand(
-            commands2.RunCommand(lambda: self.stop(),self,)
-        )
-
     def intakeIn(self) -> None:
         self.intake.set(self.powerIn)
 
     def intakeOut(self) -> None:
         self.intake.set(self.powerOut)
 
-    def cmdIntakeIn(self) -> commands2.CommandBase:
-        return commands2.RunCommand(lambda: self.intake.set(self.powerIn))
-
-    def cmdIntakeOut(self) -> commands2.CommandBase:
-        return commands2.RunCommand(lambda: self.intake.set(self.powerOut))
-
-    def stop(self):
+    def intakeStop(self) -> None:
         self.intake.set(0.)
-
-
 
     def cmdIntakeIn(self) -> commands2.CommandBase:
         return commands2.RunCommand(lambda: self.intake.set(self.powerIn))
 
     def cmdIntakeOut(self) -> commands2.CommandBase:
         return commands2.RunCommand(lambda: self.intake.set(self.powerOut))
-
-    def stop(self):
-        self.intake.set(0.)
 

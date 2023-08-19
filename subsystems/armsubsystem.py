@@ -57,6 +57,9 @@ class ArmSubsystem(commands2.SubsystemBase):
         self.leftEncoder.setPosition(0.)
         self.rightEncoder.setPosition(0.)
 
+        self.left.setIdleMode(rev.CANSparkMax.IdleMode.kBrake)
+        self.right.setIdleMode(rev.CANSparkMax.IdleMode.kBrake)
+
         # We need to invert one side of the arm
         self.left.setInverted(constants.ArmConstants.kLeftMotorReversed)
         self.right.setInverted(constants.ArmConstants.kRightMotorReversed)

@@ -19,8 +19,8 @@ class IntakeOut(commands2.CommandBase):
     def execute(self) -> None:
         self.intake.intakeOut()
 
-    def end(self) -> None:
-        self.intake.stop()
+    def end(self, interrupted: bool) -> None:
+        self.intake.intakeStop()
 
     def isFinished(self) -> bool:
         return False

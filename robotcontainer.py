@@ -34,8 +34,6 @@ class RobotContainer:
         self.intake = subsystems.intakesubsystem.IntakeSubsystem()
 
         # commands
-        self.IntakeIn = commands.intakeIn.IntakeIn
-        self.IntakeOut = commands.intakeOut.IntakeOut
 
         # The driver controller
         self.driverController = commands2.button.CommandJoystick(
@@ -165,14 +163,14 @@ class RobotContainer:
         commands2.button.JoystickButton(
             self.opsController, constants.OIConstants.kOpsLeftBumper
         ).whileTrue(
-            self.IntakeIn(self.intake)
+            commands.intakeIn.IntakeIn(self.intake)
         )
 
         # run intake out
         commands2.button.JoystickButton(
             self.opsController, constants.OIConstants.kOpsRightBumper
         ).whileTrue(
-            self.IntakeOut(self.intake)
+            commands.intakeOut.IntakeOut(self.intake)
         )
 
     def getAutonomousCommand(self) -> commands2.Command:

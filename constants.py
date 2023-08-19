@@ -10,22 +10,22 @@ class ArmConstants:
     kRightMotorReversed = True
 
     kPositionMin = 0.05
-    kPositionMax = 8.00
+    kPositionMax = 18.00
 
     kPositionInit = kPositionMin
     kPositionIntake = kPositionMax
-    kPositionYeet = 6.00
+    kPositionYeet = 11.00
 
     kMoveP = .2
     kMoveI = 0
     kMoveD = 0
 
     kMaxMoveRateRevPerS = 10.
-    kMaxMoveAccelerationRevPerSSquared = 20.
+    kMaxMoveAccelerationRevPerSSquared = 10.
 
     kIntakeMotorPort = 14
-    kIntakePowerIn = 0.5
-    kIntakePowerOut = 0.5
+    kIntakePowerIn = -1.0
+    kIntakePowerOut = .5
 
 class DriveConstants:
     kLeftMotorPort = 1
