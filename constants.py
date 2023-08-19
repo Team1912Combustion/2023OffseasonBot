@@ -10,11 +10,11 @@ class ArmConstants:
     kRightMotorReversed = True
 
     kPositionMin = 0.05
-    kPositionMax = 18.00
+    kPositionMax = 20.00
 
     kPositionInit = kPositionMin
     kPositionIntake = kPositionMax
-    kPositionYeet = 11.00
+    kPositionYeet = 9.00
 
     kMoveP = .2
     kMoveI = 0
