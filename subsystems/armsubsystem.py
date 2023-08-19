@@ -54,6 +54,8 @@ class ArmSubsystem(commands2.SubsystemBase):
         # The arm encoders
         self.leftEncoder = self.left.getEncoder()
         self.rightEncoder = self.right.getEncoder()
+        self.leftEncoder.setPosition(0.)
+        self.rightEncoder.setPosition(0.)
 
         # We need to invert one side of the arm
         self.left.setInverted(constants.ArmConstants.kLeftMotorReversed)
@@ -73,10 +75,10 @@ class ArmSubsystem(commands2.SubsystemBase):
       # self.pid.kMaxOutput = 0.05
 
         self.alignpid = PidInstance()
-        self.alignpid.kP = 0.002
+        self.alignpid.kP = 0.05
         self.alignpid.target = 0.
-        self.alignpid.kMinOutput = -0.05
-        self.alignpid.kMaxOutput = 0.05
+        self.alignpid.kMinOutput = -0.1
+        self.alignpid.kMaxOutput = 0.1
 
         self.pid = wpimath.controller.ProfiledPIDController(
             constants.ArmConstants.kMoveP,

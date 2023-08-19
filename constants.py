@@ -4,7 +4,7 @@ from wpimath.kinematics import DifferentialDriveKinematics
 
 class ArmConstants:
     kLeftMotorPort = 3
-    kRightMotorPort = 13
+    kRightMotorPort = 9
 
     kLeftMotorReversed = False
     kRightMotorReversed = True
@@ -16,16 +16,16 @@ class ArmConstants:
     kPositionIntake = kPositionMax
     kPositionYeet = 6.00
 
-    kMoveP = .002
+    kMoveP = .2
     kMoveI = 0
     kMoveD = 0
 
-    kMaxMoveRateRevPerS = 1.
-    kMaxMoveAccelerationRevPerSSquared = 2.
+    kMaxMoveRateRevPerS = 10.
+    kMaxMoveAccelerationRevPerSSquared = 20.
 
-    kIntakeMotorPort = 4
-    kIntakePowerIn = 0.1
-    kIntakePowerOut = 0.1
+    kIntakeMotorPort = 14
+    kIntakePowerIn = 0.5
+    kIntakePowerOut = 0.5
 
 class DriveConstants:
     kLeftMotorPort = 1
@@ -100,7 +100,7 @@ class OIConstants:
     kDriverXbutton = 3
     kDriverYbutton =  4
 
-    kOpsControllerPort = 1
+    kOpsControllerPort = 2
     kOpsLeftBumper = 5
     kOpsRightBumper = 6
     kOpsAbutton = 1
