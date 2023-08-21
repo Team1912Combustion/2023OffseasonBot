@@ -47,12 +47,16 @@ class RunAutoPath(SequentialCommandGroup):
         # Start at the origin facing the +x direction.
         initialPosition = Pose2d(0, 0, Rotation2d(0))
 
+        # # Here are the movements we also want to make during this command.
+        # # These movements should make an "S" like curve.
+        # movements = [Translation2d(1, 1), Translation2d(2, -1)]
+
         # Here are the movements we also want to make during this command.
-        # These movements should make an "S" like curve.
-        movements = [Translation2d(1, 1), Translation2d(2, -1)]
+        # These movements should back the robot out of the charging station
+        movements = [Translation2d(-1.5, 0), Translation2d(-3, 0)]
 
         # End at this position, three meters straight ahead of us, facing forward.
-        finalPosition = Pose2d(3, 0, Rotation2d(0))
+        finalPosition = Pose2d(-4.5, 0, Rotation2d(0))
 
         # An example trajectory to follow. All of these units are in meters.
         self.exampleTrajectory = TrajectoryGenerator.generateTrajectory(

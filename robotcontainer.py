@@ -14,6 +14,7 @@ import subsystems.intakesubsystem
 
 import commands.turntoangleprofiled
 import commands.runautopath
+from commands.autocombined import AutoCombined
 import commands.intakeIn
 import commands.intakeOut
 
@@ -174,4 +175,4 @@ class RobotContainer:
         )
 
     def getAutonomousCommand(self) -> commands2.Command:
-        return commands.runautopath.RunAutoPath(self.robotDrive)
+        return AutoCombined(self.robotDrive,self.arm,self.intake)
