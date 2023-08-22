@@ -80,8 +80,8 @@ class AutoConstants:
     kPDriveVel = 1
 
     # The max velocity and acceleration for our autonomous.
-    kMaxSpeedMetersPerSecond = .5
-    kMaxAccelerationMetersPerSecondSquared = .5
+    kMaxSpeedMetersPerSecond = 3.
+    kMaxAccelerationMetersPerSecondSquared = 6.
 
     # Baseline values for a RAMSETE follower in units of meters
     # and seconds. These are recommended, but may be changes if wished.

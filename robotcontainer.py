@@ -16,6 +16,7 @@ import commands.turntoangleprofiled
 import commands.runautopath
 from commands.autocombined import AutoCombined
 from commands.runautopath import RunAutoPath
+from commands.runtest import RunTest
 import commands.intakeIn
 import commands.intakeOut
 
@@ -176,5 +177,6 @@ class RobotContainer:
         )
 
     def getAutonomousCommand(self) -> commands2.Command:
-        #return AutoCombined(self.robotDrive,self.arm,self.intake)
-        return RunAutoPath(self.robotDrive)
+        return AutoCombined(self.robotDrive,self.arm,self.intake)
+        #return RunAutoPath(self.robotDrive)
+        #return RunTest(self.robotDrive)

@@ -1,5 +1,5 @@
 
-from commands2 import RamseteCommand, RunCommand, SequentialCommandGroup
+from commands2 import RamseteCommand, RunCommand, SequentialCommandGroup, InstantCommand
 from wpimath.controller import (
     RamseteController,
     PIDController,
@@ -28,7 +28,7 @@ class RunAutoPath(SequentialCommandGroup):
                 constants.AutoConstants.kaVoltSecondsSquaredPerMeter,
             ),
             constants.AutoConstants.kDriveKinematics,
-            maxVoltage=10,  # 10 volts max.
+            maxVoltage=30,  # 10 volts max.
         )
 
         # Create a configuration for the trajctory. This tells the trajectory its constraints
@@ -45,7 +45,7 @@ class RunAutoPath(SequentialCommandGroup):
         config.addConstraint(autoVoltageConstraint)
 
         # Start at the origin facing the +x direction.
-        initialPosition = Pose2d(0, 0, Rotation2d(0))
+        initialPosition = Pose2d(0, 0, Rotation2d(0.))
 
         # # Here are the movements we also want to make during this command.
         # # These movements should make an "S" like curve.
@@ -53,10 +53,11 @@ class RunAutoPath(SequentialCommandGroup):
 
         # Here are the movements we also want to make during this command.
         # These movements should back the robot out of the charging station
-        movements = [Translation2d(-1.5, 0), Translation2d(-3, 0)]
+        # movements = [Translation2d(-1.5, 0), Translation2d(-3, 0)]
+        movements = [Translation2d(2, 0), Translation2d(3, 0)]
 
         # End at this position, three meters straight ahead of us, facing forward.
-        finalPosition = Pose2d(-4.5, 0, Rotation2d(0))
+        finalPosition = Pose2d(4, 0, Rotation2d(0.))
 
         # An example trajectory to follow. All of these units are in meters.
         self.exampleTrajectory = TrajectoryGenerator.generateTrajectory(
@@ -65,6 +66,8 @@ class RunAutoPath(SequentialCommandGroup):
             finalPosition,
             config,
         )
+
+        print('traj time: ',self.exampleTrajectory.totalTime())
 
         # create the RAMSETE command
         self.ramseteCommand = RamseteCommand(
@@ -96,7 +99,6 @@ class RunAutoPath(SequentialCommandGroup):
         )
 
         self.addCommands(
-           RunCommand(lambda: self.drive.resetOdometry(self.exampleTrajectory.initialPose()), self.drive),
-           self.ramseteCommand,
-           RunCommand(lambda: self.drive.tankDriveVolts(0, 0), self.drive),
+           InstantCommand(lambda: self.drive.resetOdometry(self.exampleTrajectory.initialPose()), [self.drive]),
+           self.ramseteCommand.andThen(lambda: self.drive.tankDriveVolts(0, 0)),
         )
