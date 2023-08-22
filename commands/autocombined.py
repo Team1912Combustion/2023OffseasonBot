@@ -9,6 +9,7 @@ from subsystems.intakesubsystem import IntakeSubsystem
 from commands.intakeOut import IntakeOut
 from commands.intakeOff import IntakeOff
 from commands.runautopath import RunAutoPath
+from commands.runtest import RunTest
 
 import constants
 
@@ -23,13 +24,14 @@ class AutoCombined(SequentialCommandGroup):
 
         self.addCommands(
            RunCommand(lambda: self.arm.setTarget(constants.ArmConstants.kPositionYeet),
-               self.arm).withTimeout(2.),
+               self.arm).withTimeout(3.),
            #WaitCommand(1.),
-           IntakeOut(self.intake).withTimeout(1.),
+           IntakeOut(self.intake).withTimeout(0.2),
            #WaitCommand(0.5),
-           IntakeOff(self.intake).withTimeout(.1),
+           IntakeOff(self.intake).withTimeout(0.2),
            RunCommand(lambda: self.arm.setTarget(constants.ArmConstants.kPositionInit),
-               self.arm).withTimeout(2.),
-           #WaitCommand(1.),
-           RunAutoPath(self.drive)
+               self.arm).withTimeout(3.),
+           WaitCommand(.2),
+           RunTest(self.drive),
+           #RunAutoPath(self.drive),
         )
