@@ -54,10 +54,10 @@ class RunAutoPath(SequentialCommandGroup):
         # Here are the movements we also want to make during this command.
         # These movements should back the robot out of the charging station
         # movements = [Translation2d(-1.5, 0), Translation2d(-3, 0)]
-        movements = [Translation2d(2, 0), Translation2d(3, 0)]
+        movements = [Translation2d(-.5, 0), Translation2d(.75, 0)]
 
         # End at this position, three meters straight ahead of us, facing forward.
-        finalPosition = Pose2d(4, 0, Rotation2d(0.))
+        finalPosition = Pose2d(-1, 0, Rotation2d(0.))
 
         # An example trajectory to follow. All of these units are in meters.
         self.exampleTrajectory = TrajectoryGenerator.generateTrajectory(
