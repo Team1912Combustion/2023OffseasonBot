@@ -24,12 +24,12 @@ class AutoCombined(SequentialCommandGroup):
         self.addCommands(
            RunCommand(lambda: self.arm.setTarget(constants.ArmConstants.kPositionYeet),
                self.arm).withTimeout(2.),
-           WaitCommand(2.),
-           IntakeOut(self.intake),
-           WaitCommand(0.5),
-           IntakeOff(self.intake),
+           #WaitCommand(1.),
+           IntakeOut(self.intake).withTimeout(1.),
+           #WaitCommand(0.5),
+           IntakeOff(self.intake).withTimeout(.1),
            RunCommand(lambda: self.arm.setTarget(constants.ArmConstants.kPositionInit),
-               self.arm).withTimeout(1.),
-           WaitCommand(1.),
+               self.arm).withTimeout(2.),
+           #WaitCommand(1.),
            RunAutoPath(self.drive)
         )
