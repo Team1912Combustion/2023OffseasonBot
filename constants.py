@@ -24,8 +24,8 @@ class ArmConstants:
     kMaxMoveAccelerationRevPerSSquared = 10.
 
     kIntakeMotorPort = 14
-    kIntakePowerIn = -1.0
-    kIntakePowerOut = .5
+    kIntakePowerOut = -1.0
+    kIntakePowerIn = .5
 
 class DriveConstants:
     kLeftMotorPort = 1
