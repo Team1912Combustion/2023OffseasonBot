@@ -5,6 +5,7 @@ import commands2
 import math
 import navx
 from wpimath.kinematics import DifferentialDriveOdometry, DifferentialDriveWheelSpeeds
+from wpimath.geometry import Pose2d, Rotation2d
 
 import constants
 
@@ -55,6 +56,14 @@ class DriveSubsystem(commands2.SubsystemBase):
             self.navx.getRotation2d(),
             self.leftEncoder.getDistance(),
             self.rightEncoder.getDistance(),
+        )
+
+        self.resetEncoders()
+        self.odometry.resetPosition(
+            self.navx.getRotation2d(),
+            self.leftEncoder.getDistance(),
+            self.rightEncoder.getDistance(),
+            Pose2d(2.,2.,Rotation2d(3.141592)),
         )
 
     def periodic(self):

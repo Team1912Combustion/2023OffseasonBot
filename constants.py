@@ -28,6 +28,7 @@ class ArmConstants:
     kIntakePowerIn = .5
 
 class DriveConstants:
+
     kLeftMotorPort = 1
     kRightMotorPort = 0
 
@@ -49,6 +50,10 @@ class DriveConstants:
     kStabilizationI = 0.5
     kStabilizationD = 0
 
+    kDriveP = .5
+    kDriveI = 0
+    kDriveD = 0
+
     kTurnP = .01
     kTurnI = 0
     kTurnD = 0
@@ -61,6 +66,9 @@ class DriveConstants:
 
 class AutoConstants:
 
+    kDriveTrainMotorCount = 2
+    kGearingRatio = 8.45
+
     # In meters, distance between wheels on each side of robot.
     kTrackWidthMeters = 0.60
     kDriveKinematics = DifferentialDriveKinematics(kTrackWidthMeters)
@@ -68,6 +76,7 @@ class AutoConstants:
     # Encoder counts per revolution/rotation.
     kEncoderCPR = 360
     kWheelDiameterMeters = 0.152
+    kWheelRadius = kWheelDiameterMeters / 2
 
     # NOTE: Please do NOT use these values on your robot. Rather, characterize your
     # drivetrain using the FRC Characterization tool. These are for demo purposes

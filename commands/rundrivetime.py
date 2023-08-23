@@ -9,5 +9,5 @@ class RunDriveTime(SequentialCommandGroup):
         super().__init__()
 
         self.addCommands(
-            DriveTime(-0.7, 6.0, drive),
+            DriveTime(-0.7, 3.0, drive),
         )

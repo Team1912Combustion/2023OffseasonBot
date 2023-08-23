@@ -18,6 +18,7 @@ from commands.autodrivedistance import AutoDriveDistance
 from commands.autodrivetime import AutoDriveTime
 from commands.runautopath import RunAutoPath
 from commands.rundrivetime import RunDriveTime
+from commands.rundrivedistance import RunDriveDistance
 import commands.intakeIn
 import commands.intakeOut
 
@@ -178,7 +179,8 @@ class RobotContainer:
         )
 
     def getAutonomousCommand(self) -> commands2.Command:
-        return AutoDriveTime(self.robotDrive,self.arm,self.intake)
+        #return AutoDriveTime(self.robotDrive,self.arm,self.intake)
         #return AutoDriveDistance(self.robotDrive,self.arm,self.intake)
         #return RunAutoPath(self.robotDrive)
-        #return RunTest(self.robotDrive)
+        return RunDriveDistance(self.robotDrive)
+        #return RunDriveTime(self.robotDrive)
