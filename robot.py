@@ -27,6 +27,7 @@ class MyRobot(commands2.TimedCommandRobot):
     Command v2 robots are encouraged to inherit from TimedCommandRobot, which
     has an implementation of robotPeriodic which runs the scheduler for you
     """
+    wpilib.CameraServer.launch()
 
     def robotInit(self) -> None:
         """
