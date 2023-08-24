@@ -10,11 +10,11 @@ class ArmConstants:
     kRightMotorReversed = True
 
     kPositionMin = 0.05
-    kPositionMax = 20.00
+    kPositionYeet = 6.00
+    kPositionMax = 23.00
 
     kPositionInit = kPositionMin
     kPositionIntake = kPositionMax
-    kPositionYeet = 9.00
 
     kMoveP = .2
     kMoveI = 0
@@ -44,11 +44,11 @@ class DriveConstants:
     # Assumes the encoders are directly mounted on the wheel shafts
     kEncoderDistancePerPulse = (kWheelDiameterMeters * math.pi) / kEncoderCPR
 
-    kGyroReversed = False
+    kGyroReversed = True
 
-    kStabilizationP = 1
-    kStabilizationI = 0.5
-    kStabilizationD = 0
+    kStabilizationP = 1.
+    kStabilizationI = 0.
+    kStabilizationD = 0.
 
     kDriveP = .5
     kDriveI = 0

@@ -36,16 +36,19 @@ class DriveDistance(commands2.CommandBase):
         )
 
         self.drivePID = wpimath.controller.ProfiledPIDController(
-            constants.DriveConstants.kDriveP,
-            constants.DriveConstants.kDriveI,
-            constants.DriveConstants.kDriveD,
+            .5, 0., 0.,
+            #constants.DriveConstants.kDriveP,
+            #constants.DriveConstants.kDriveI,
+            #constants.DriveConstants.kDriveD,
             wpimath.trajectory.TrapezoidProfile.Constraints(
-                constants.AutoConstants.kMaxSpeedMetersPerSecond,
-                constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared,
+                1., 2.,
+                #constants.AutoConstants.kMaxSpeedMetersPerSecond,
+                #constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared,
             ),
         )
 
         self.drive.resetEncoders()
+        self.startTime = wpilib.Timer.getFPGATimestamp()
 
     def execute(self) -> None:
         turnspeed = self.turnPID.calculate(self.drive.getTurnRate(), 0.)
@@ -57,7 +60,7 @@ class DriveDistance(commands2.CommandBase):
         self.drive.arcadeDrive(0, 0)
 
     def isFinished(self) -> bool:
-        timecheck = wpilib.Timer.getFPGATimestamp() - self.timeout >= 0.
+        timecheck = wpilib.Timer.getFPGATimestamp() - self.startTime >= self.timeout
         distcheck = ( abs(self.drive.getAverageEncoderDistance() - self.distance)
             <= self.error )
         return (timecheck or distcheck)

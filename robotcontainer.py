@@ -180,7 +180,7 @@ class RobotContainer:
 
     def getAutonomousCommand(self) -> commands2.Command:
         #return AutoDriveTime(self.robotDrive,self.arm,self.intake)
-        #return AutoDriveDistance(self.robotDrive,self.arm,self.intake)
+        return AutoDriveDistance(self.robotDrive,self.arm,self.intake)
         #return RunAutoPath(self.robotDrive)
-        return RunDriveDistance(self.robotDrive)
+        #return RunDriveDistance(self.robotDrive)
         #return RunDriveTime(self.robotDrive)
