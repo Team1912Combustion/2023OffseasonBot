@@ -57,7 +57,7 @@ class RobotContainer:
             # A split-stick arcade command, with forward/backward controlled by the left
             # hand, and turning controlled by the right.
             commands2.RunCommand(
-                lambda: self.robotDrive.arcadeDrive(
+                lambda: self.robotDrive.arcadeDriveSquare(
                     -self.driverController.getRawAxis(1),
                     -self.driverController.getRawAxis(4)
                 ),
