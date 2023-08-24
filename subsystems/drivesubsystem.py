@@ -91,6 +91,9 @@ class DriveSubsystem(commands2.SubsystemBase):
             pose,
         )
 
+    def arcadeDriveSquare(self, fwd: float, rot: float):
+        self.drive.arcadeDrive(fwd, rot, True)
+
     def arcadeDrive(self, fwd: float, rot: float):
         self.drive.arcadeDrive(fwd, rot)
 
