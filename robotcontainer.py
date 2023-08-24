@@ -45,8 +45,8 @@ class RobotContainer:
             constants.OIConstants.kDriverControllerPort)
 
         # The operator controller
-        self.opsController = commands2.button.CommandJoystick(
-            constants.OIConstants.kOpsControllerPort)
+        # self.opsController = commands2.button.CommandJoystick(
+        #     constants.OIConstants.kOpsControllerPort)
 
         # Configure the button bindings
         self.configureButtonBindings()
@@ -127,7 +127,7 @@ class RobotContainer:
       # )
 
         # move the arm to the initial position
-        commands2.button.JoystickButton(self.opsController, constants.OIConstants.kOpsAbutton).onTrue(
+        commands2.button.JoystickButton(self.driverController, constants.OIConstants.kOpsYbutton).onTrue(
             commands2.RunCommand(
                 lambda: self.arm.setTarget(constants.ArmConstants.kPositionInit),
                 [self.arm],
@@ -135,7 +135,7 @@ class RobotContainer:
         )
 
         # move the arm to the intake position
-        commands2.button.JoystickButton(self.opsController, constants.OIConstants.kOpsYbutton).onTrue(
+        commands2.button.JoystickButton(self.driverController, constants.OIConstants.kOpsAbutton).onTrue(
             commands2.RunCommand(
                 lambda: self.arm.setTarget(constants.ArmConstants.kPositionIntake),
                 [self.arm],
@@ -143,7 +143,7 @@ class RobotContainer:
         )
 
         # move the arm to the yeet position
-        commands2.button.JoystickButton(self.opsController, constants.OIConstants.kOpsXbutton).onTrue(
+        commands2.button.JoystickButton(self.driverController, constants.OIConstants.kOpsXbutton).onTrue(
             commands2.RunCommand(
                 lambda: self.arm.setTarget(constants.ArmConstants.kPositionYeet),
                 [self.arm],
@@ -166,14 +166,14 @@ class RobotContainer:
 
         # run intake in
         commands2.button.JoystickButton(
-            self.opsController, constants.OIConstants.kOpsLeftBumper
+            self.driverController, constants.OIConstants.kOpsLeftBumper
         ).whileTrue(
             commands.intakeIn.IntakeIn(self.intake)
         )
 
         # run intake out
         commands2.button.JoystickButton(
-            self.opsController, constants.OIConstants.kOpsRightBumper
+            self.driverController, constants.OIConstants.kOpsRightBumper
         ).whileTrue(
             commands.intakeOut.IntakeOut(self.intake)
         )
