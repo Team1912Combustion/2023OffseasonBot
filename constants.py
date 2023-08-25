@@ -16,12 +16,12 @@ class ArmConstants:
     kPositionInit = kPositionMin
     kPositionIntake = kPositionMax
 
-    kMoveP = .2
+    kMoveP = .25
     kMoveI = 0
     kMoveD = 0
 
-    kMaxMoveRateRevPerS = 10.
-    kMaxMoveAccelerationRevPerSSquared = 10.
+    kMaxMoveRateRevPerS = 20.
+    kMaxMoveAccelerationRevPerSSquared = 40.
 
     kIntakeMotorPort = 14
     kIntakePowerOut = -1.0
